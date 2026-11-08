@@ -11,6 +11,8 @@ dev = ["ruff"]
 [tool.ruff]
 line-length = 100
 target-version = "py312"
+# Lessons show beginner code on purpose (e.g. single quotes), so only .py files are checked.
+extend-exclude = ["*.md"]
 
 [tool.ruff.lint]
 # Error-prone code (F, E, B), import order (I) and modern syntax (UP).
