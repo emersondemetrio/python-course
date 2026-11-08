@@ -626,4 +626,4 @@ Both work. For a simple default value, `.get()` is shorter and clearer.
 - `raise ValueError("message")` is the honest way for a function to say "I cannot do this". Do not return fake values like `0`.
 - `except SomeError as error:` lets you print the message. Custom exceptions: `class MyError(Exception): pass`.
 
-**Next:** [Testing](testing.md)
+**Next:** [uv and ruff](uv-and-ruff.md)

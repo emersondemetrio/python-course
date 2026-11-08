@@ -208,15 +208,15 @@ In the app, call these functions with your `Piece` objects converted with `piece
 <summary>Show answer</summary>
 
 ```powershell
-python -m pip install anthropic
+uv add anthropic
 $env:ANTHROPIC_API_KEY = "sk-ant-..."
 ```
 
 On macOS or Linux: `export ANTHROPIC_API_KEY="sk-ant-..."`.
 
-This variable lasts only while this terminal is open. To keep it, create a file `.env` with `ANTHROPIC_API_KEY=sk-ant-...`, add `.env` to your `.gitignore` **before** anything else, and load it with the `python-dotenv` library.
+This variable lasts only while this terminal is open. To keep it, create a file `.env` with `ANTHROPIC_API_KEY=sk-ant-...`, add `.env` to your `.gitignore` **before** anything else, and load it with the `python-dotenv` library (`uv add python-dotenv`).
 
-Add `anthropic` to `requirements.txt`.
+`uv add` already recorded `anthropic` in `pyproject.toml` and `uv.lock`.
 
 </details>
 
@@ -292,7 +292,7 @@ def ai_suggestions(pieces):
 Try it in the terminal:
 
 ```console
-PS C:\Users\you\Projects\atanor> python -c "from atanor.storage import connect, all_pieces; from atanor.suggestions import ai_suggestions; print(ai_suggestions([p.to_dict() for p in all_pieces(connect())]))"
+PS C:\Users\you\Projects\atanor> uv run python -c "from atanor.storage import connect, all_pieces; from atanor.suggestions import ai_suggestions; print(ai_suggestions([p.to_dict() for p in all_pieces(connect())]))"
 1. Try celadon on your porcelain vase: on a white body it turns a lighter, clearer green.
 2. You have only thrown on the wheel with stoneware; a hand-built stoneware piece would show you how the clay behaves without the wheel.
 3. ...
@@ -394,7 +394,7 @@ Also call `loadSuggestions()` at the end of `advance()` and after adding a piece
 
 ## Checkpoint
 
-1. `python -m pytest` passes, including the suggestion tests.
+1. `uv run pytest` passes, including the suggestion tests.
 2. Open the page: the "What should I do next?" section lists pieces that are ready, based on the dates.
 3. Click "Ask for creative ideas": after a few seconds, three ideas appear.
 4. Close the terminal, open a new one **without** setting the key, start the server and click the button again: the page shows the "unavailable" message and everything else still works.
@@ -489,8 +489,8 @@ webview.start()
 ```
 
 ```powershell
-python -m pip install pywebview
-python desktop.py
+uv add pywebview
+uv run desktop.py
 ```
 
 The Flask server runs in the background (a **thread**), and pywebview opens a native window pointing at it. `daemon=True` makes the server stop when you close the window. To turn it into a real `.exe` you can double-click, look up **PyInstaller**.

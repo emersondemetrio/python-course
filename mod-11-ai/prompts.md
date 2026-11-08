@@ -363,7 +363,7 @@ for item in ai_suggestions:
 ```
 
 ```console
-(.venv) PS C:\Users\you\Projects\ai> python plants.py
+PS C:\Users\you\Projects\ai> uv run plants.py
 Do this today:
  - Water the Basil (1 day(s) late).
  - Water the Fern (2 day(s) late).

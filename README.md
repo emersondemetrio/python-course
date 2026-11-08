@@ -32,7 +32,7 @@ Everything is explained from zero. Every new word is defined the first time it a
 | [04 · Files](mod-04-files/) | Reading and writing files | **Milestone 1:** save pieces to a text file |
 | [05 · Git and GitHub](mod-05-git-and-github/) | Version control, GitHub, Markdown | **Milestone 2:** the project becomes a repository |
 | [06 · Data structures](mod-06-data-structures/) | Dictionaries, tuples, sets, JSON, comprehensions | **Milestone 3:** each piece is a dictionary saved as JSON |
-| [07 · Organizing code](mod-07-organizing-code/) | Modules, exceptions, testing, pip and virtual environments | **Milestone 4:** the project split into modules, with tests |
+| [07 · Organizing code](mod-07-organizing-code/) | Modules, exceptions, uv and ruff, testing | **Milestone 4:** the project split into modules, with tests |
 | [08 · Objects](mod-08-objects/) | Classes and inheritance | **Milestone 5:** a `Piece` class with its lifecycle |
 | [09 · Databases](mod-09-databases/) | SQL basics, SQLite | **Milestone 6:** data moves from JSON to SQLite |
 | [10 · HTTP and the web](mod-10-http-and-web/) | How the web works, calling APIs, building an API with Flask | **Milestone 7:** a web API and an HTML/CSS/JS interface |
@@ -74,11 +74,12 @@ Some exercises also have a **Hint** box. Open the hint first if you are stuck, a
 
 ## What you need
 
-- **Python 3** (version 3.12 or newer). Download it from [python.org](https://www.python.org/downloads/). On Windows, check the box **"Add python.exe to PATH"** during installation.
-- **A code editor:** [Cursor](https://www.cursor.com/) or [VS Code](https://code.visualstudio.com/). Both are free.
+- **Python 3** (version 3.12 or newer). Download it from [python.org](https://www.python.org/downloads/) (on Windows, check the box **"Add python.exe to PATH"** during installation), or install it with uv (`uv python install`).
+- **A code editor:** [Cursor](https://www.cursor.com/) or [VS Code](https://code.visualstudio.com/), both free, with the **Python** and **Ruff** extensions.
 - **A terminal:** PowerShell on Windows, Terminal on macOS or Linux. It is already on your computer.
+- **[uv](https://docs.astral.sh/uv/)**, from module 07 on: one tool that creates projects, installs libraries and runs your code. Module 07 shows how to install it. We use uv instead of pip throughout the course.
 
-Module 00 walks you through all of this.
+Module 00 walks you through the first three.
 
 ## The final project
 
@@ -99,10 +100,12 @@ See the [final project](mod-final-project/) folder for the full plan.
 
 ## For contributors
 
-Every Python example that shows an output is checked automatically: [`tools/verify.py`](tools/verify.py) runs each example and compares what it prints with the output written in the lesson. Run it from the repository root before committing changes:
+Every Python example that shows an output is checked automatically: [`tools/verify.py`](tools/verify.py) runs each example and compares what it prints with the output written in the lesson. Before committing changes, run these from the repository root:
 
 ```bash
-python tools/verify.py .
+uv run tools/verify.py
+uv run ruff check
+uv run ruff format --check
 ```
 
 ## License

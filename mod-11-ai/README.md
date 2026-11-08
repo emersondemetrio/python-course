@@ -13,7 +13,7 @@ The goal is not magic. By the end you will know exactly what the model receives,
 ## Before you start
 
 - You can call an API with `requests` and read JSON (module 10).
-- You can install packages in a virtual environment (module 7).
+- You can add libraries to a project with `uv add` and run code with `uv run` (module 7).
 - You know `try` and `except` (module 7) and functions that `return` values (module 3).
 - You will need an API key from an AI provider. Your teacher can help you create one. Calls cost a small amount of money per use, so read the cost section in the first file before you start.
 

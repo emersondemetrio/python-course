@@ -348,7 +348,7 @@ else:
 ```
 
 ```console
-PS C:\Users\you\Projects\atanor> python migrate.py
+PS C:\Users\you\Projects\atanor> uv run migrate.py
 Migrated 3 pieces into atanor.db.
 ```
 
@@ -403,10 +403,10 @@ A **fixture** is a function pytest runs before each test that asks for it by nam
 ## Checkpoint
 
 ```console
-PS C:\Users\you\Projects\atanor> python -m pytest
+PS C:\Users\you\Projects\atanor> uv run pytest
 .......                                                     [100%]
 7 passed in 0.05s
-PS C:\Users\you\Projects\atanor> python main.py
+PS C:\Users\you\Projects\atanor> uv run main.py
 ...
 > 2
 1. Blue bowl (stoneware, wheel) - bisque_fired

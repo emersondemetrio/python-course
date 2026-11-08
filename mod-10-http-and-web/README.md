@@ -13,7 +13,7 @@ This is where your two worlds meet: the Python you learned in this course and th
 ## Before you start
 
 - You know dictionaries, lists and JSON (module 6).
-- You can create a virtual environment and install packages with `pip` (module 7).
+- You can create a project and add libraries with uv (`uv init`, `uv add`, `uv run`, module 7).
 - You know how to handle errors with `try` and `except` (module 7).
 
 ## Time estimate

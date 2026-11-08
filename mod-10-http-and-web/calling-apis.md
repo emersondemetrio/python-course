@@ -20,21 +20,16 @@ For example, GitHub has a public API. The endpoint `https://api.github.com/users
 
 ### Installing requests
 
-Python has a tool for HTTP in the standard library (`urllib`), but almost everybody uses a friendlier library called `requests`. Install it inside your virtual environment (module 7):
+Python has a tool for HTTP in the standard library (`urllib`), but almost everybody uses a friendlier library called `requests`. Create a uv project for this file's examples and add `requests` to it (module 7):
 
 ```powershell
-# Windows (PowerShell)
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install requests
+cd ~\Projects
+uv init apis
+cd apis
+uv add requests
 ```
 
-```bash
-# macOS / Linux
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install requests
-```
+Then run each example with `uv run`, for example `uv run first_request.py`.
 
 ### Your first request
 
@@ -49,7 +44,7 @@ print(response.headers["Content-Type"])
 ```
 
 ```console
-PS C:\Users\you\Projects\apis> python first_request.py
+PS C:\Users\you\Projects\apis> uv run first_request.py
 200
 application/json; charset=utf-8
 ```
@@ -75,7 +70,7 @@ print(f"Public repositories: {user['public_repos']}")
 ```
 
 ```console
-PS C:\Users\you\Projects\apis> python read_user.py
+PS C:\Users\you\Projects\apis> uv run read_user.py
 octocat
 The Octocat
 Public repositories: 8
@@ -126,7 +121,7 @@ for repo in response.json():
 ```
 
 ```console
-PS C:\Users\you\Projects\apis> python repos.py
+PS C:\Users\you\Projects\apis> uv run repos.py
 https://api.github.com/users/octocat/repos?sort=updated&per_page=3
 - Hello-World
 - Spoon-Knife
@@ -169,7 +164,7 @@ else:
 ```
 
 ```console
-PS C:\Users\you\Projects\apis> python check.py
+PS C:\Users\you\Projects\apis> uv run check.py
 User not found.
 ```
 
@@ -274,7 +269,7 @@ If the request failed, the body may be an error message instead of the data you 
 ModuleNotFoundError: No module named 'requests'
 ```
 
-This means `requests` is not installed in the Python you are using. Activate your virtual environment (you should see `(.venv)` at the start of the terminal line) and install it with `python -m pip install requests`.
+This means the program ran with a Python that does not have `requests`. You probably typed `python file.py`, which ignores the project's `.venv`. **Fix:** run it with `uv run file.py`. If it still fails, add the library with `uv add requests` inside the project folder.
 
 ## Exercises
 
@@ -429,7 +424,7 @@ print(get_repo_count("this-user-does-not-exist-123"))
 ```
 
 ```console
-PS C:\Users\you\Projects\apis> python repo_count.py
+PS C:\Users\you\Projects\apis> uv run repo_count.py
 8
 None
 ```

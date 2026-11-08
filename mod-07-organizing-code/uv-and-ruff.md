@@ -1,407 +1,521 @@
-# pip and virtual environments
+# uv and ruff
 
-> **In one sentence:** `pip` installs code written by other people (libraries), and a virtual environment is a private box for each project, so the libraries of one project never mix with another.
+> **In one sentence:** uv installs Python, creates your project and installs the libraries it needs, and ruff checks and tidies your code automatically.
 
 ## Why it matters
 
-Python comes with many useful modules (`json`, `random`, `math`), but the world has written much more: libraries to build websites, talk to databases, call AI models, draw charts. You will use several of them in the next modules: `pytest` for tests, `flask` for the web, and a library to talk to an AI model. To use them you need to install them, and to install them **safely** you need a virtual environment. Without one, sooner or later two projects will need different versions of the same library and one of them will break.
+Sooner or later you will want code that other people wrote: a library to build a website, to talk to a database, to test your programs. You need a reliable way to install those libraries, to keep each project's libraries separate, and to let someone else recreate your project exactly. uv does all of that with a handful of short commands. ruff then keeps your code clean and consistent, so you spend your attention on what the code does, not on spaces and commas.
 
 ## Analogy
 
-A **library** is like a ready-made ingredient you buy at the store instead of making from scratch, like puff pastry. **PyPI** (the Python Package Index, at [pypi.org](https://pypi.org)) is the store. **pip** is the person who goes to the store and brings the ingredient home.
+Think of each project as a **kitchen**. uv is the person who sets up the kitchen for you: it brings the right stove (the Python version), stocks the pantry with the ingredients the recipe needs (the libraries), and writes down the exact shopping list, with brands and sizes, so anyone can set up an identical kitchen later.
 
-A **virtual environment** is a separate pantry for each recipe you are working on. The cake project has its own pantry with its own flour; the bread project has another. If the cake needs a special flour, buying it does not change the bread's pantry. And if you mess up one pantry, you can throw it away and build a new one in a minute.
-
-`requirements.txt` is the shopping list taped to the pantry door: it says exactly what this project needs, so anyone (including you, on another computer) can fill a new pantry with the same things.
+ruff is the **spell checker and auto-indent** of your code. A spell checker underlines mistakes as you write (that is ruff's **linter**), and an auto-format button makes the text look tidy and consistent (that is ruff's **formatter**). Neither one writes the recipe for you. They only make sure it is written well.
 
 ## The idea, step by step
 
-### Libraries, PyPI and pip
+### Libraries and PyPI
 
-- A **library** (also called a **package**) is code someone else wrote and shared, so you can `import` it.
-- **PyPI** is the public website where those libraries are published. It has hundreds of thousands of them.
-- **pip** is the tool, installed together with Python, that downloads libraries from PyPI and installs them for you.
+A **library** (also called a **package**) is code someone else wrote and shared so you can use it. Python already comes with many libraries, like `random`, `json` and `datetime`. That collection is called the **standard library**, and you can `import` it right away.
 
-You can check that pip is there:
+Thousands of other libraries live on **PyPI** (the Python Package Index, [pypi.org](https://pypi.org)), a free public catalog. `flask` (websites), `requests` (talking to other websites) and `pytest` (tests) all live there. To use them, you first have to download and install them. That is uv's job.
 
-```console
-PS C:\Users\you\Projects> python -m pip --version
-pip 24.0 from C:\Python312\Lib\site-packages\pip (python 3.12)
-```
+### What uv is, and why not pip
 
-### Always use `python -m pip`
+**uv** is one tool that does everything around a Python project:
 
-You will see both `pip install something` and `python -m pip install something` on the internet. Prefer the second. Your computer may have more than one Python installed, and `pip` alone might belong to a different one. `python -m pip` means "the pip that belongs to **this** python", so the library goes exactly where your program will look for it.
+- installs Python itself, in the version you need;
+- creates a project folder with the right files;
+- creates the project's **virtual environment**: a private folder (`.venv`) where the project's libraries live, so that two projects never fight over different versions of the same library;
+- installs and removes libraries, and records them in a list;
+- runs your code inside that environment.
 
-### The problem without a virtual environment
+You will see many tutorials online that use **pip**, the older installer that comes with Python. pip only installs libraries; for everything else you need extra tools and extra steps (creating and "activating" the virtual environment by hand, keeping a list up to date yourself). uv does all of it, and it is much faster. That is why this course uses uv.
 
-If you just run `python -m pip install flask` right now, flask is installed **globally**: in the one shared place for your whole computer. That seems convenient, until:
+### Installing uv
 
-- Project A needs version 2 of a library, and project B needs version 3. Only one can be installed globally.
-- You install many things to try them, and a year later you have no idea which project needs what.
-- At work, your computer may not even let you install globally.
-
-The solution is one virtual environment per project.
-
-### Creating a virtual environment
-
-Inside your project folder, run:
+You install uv once per computer. In **Windows PowerShell**:
 
 ```powershell
-python -m venv .venv
-```
-
-This creates a folder called `.venv` inside your project. It contains a private copy of Python and a private place for libraries. `venv` is the module that does this, and `.venv` is the name of the folder. You can choose any name, but `.venv` is the convention: everyone uses it, so tools like Cursor recognize it automatically.
-
-<!-- no-verify -->
-```text
-my-project/
-├── .venv/        <- the private pantry (do not edit it by hand)
-└── main.py
-```
-
-### Activating it
-
-Creating is not enough: you must **activate** the environment in your terminal, so that `python` and `pip` point to the private copy.
-
-On **Windows (PowerShell)**:
-
-```powershell
-.venv\Scripts\Activate.ps1
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
 On **macOS or Linux**:
 
 ```bash
-source .venv/bin/activate
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-When it works, the prompt changes. You will see `(.venv)` at the start of the line:
+Close the terminal and open a new one, then check that it worked:
 
 ```console
-PS C:\Users\you\Projects\my-project> .venv\Scripts\Activate.ps1
-(.venv) PS C:\Users\you\Projects\my-project>
+PS C:\Users\you> uv --version
+uv 0.11.32
 ```
 
-That `(.venv)` is your signal: "everything I install now goes into this project's pantry". To leave the environment, type `deactivate`.
+Your version number will probably be different. That is fine.
 
-Important: activation lasts only for **that terminal window**. If you close it and open a new one, activate again. Make it a habit: `cd` into the project, activate, then work.
+### Installing Python with uv
 
-### Installing a library
-
-With the environment active:
-
-```console
-(.venv) PS C:\Users\you\Projects\my-project> python -m pip install requests
-Collecting requests
-...
-Successfully installed certifi-2024.8.30 charset-normalizer-3.4.0 idna-3.10 requests-2.32.3 urllib3-2.2.3
-```
-
-You asked for one library and pip installed five. That is normal: `requests` needs other libraries to work (its **dependencies**), and pip brings them too.
-
-Now `import requests` works in your programs, **but only while this environment is active**.
-
-To see what is installed in the environment:
-
-```console
-(.venv) PS C:\Users\you\Projects\my-project> python -m pip list
-Package            Version
------------------- ---------
-certifi            2024.8.30
-charset-normalizer 3.4.0
-idna               3.10
-pip                24.0
-requests           2.32.3
-urllib3            2.2.3
-```
-
-To remove one: `python -m pip uninstall requests`.
-
-### `requirements.txt`: the shopping list
-
-A project should say which libraries it needs. The convention is a text file called `requirements.txt`, one library per line. You can write it by hand:
-
-<!-- no-verify -->
-```text
-requests
-pytest
-```
-
-Or you can ask pip to write the exact list of everything installed, with versions, using `freeze`:
-
-```console
-(.venv) PS C:\Users\you\Projects\my-project> python -m pip freeze > requirements.txt
-```
-
-`>` means "instead of showing the result on the screen, write it into this file". The file will look like:
-
-<!-- no-verify -->
-```text
-certifi==2024.8.30
-charset-normalizer==3.4.0
-idna==3.10
-requests==2.32.3
-urllib3==2.2.3
-```
-
-`==` pins the exact version, so everyone gets the same thing.
-
-Now, on another computer (or after deleting `.venv`), anyone can rebuild the environment with:
+If you do not have Python yet, or want a newer version, uv can install it:
 
 ```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
+uv python install
 ```
 
-`-r` means "read the list from this file".
+You do not have to remember where it went. uv finds it by itself whenever you run a project.
 
-### `.venv` does not go into Git
+### Creating a project: `uv init`
 
-The `.venv` folder is big, full of files that pip can recreate at any time, and specific to your computer. It should **never** be committed. `requirements.txt` **should** be committed: it is small and it is the recipe to rebuild everything.
+Go to your projects folder and create a new project:
 
-Add this to your `.gitignore` file (module 05):
+```console
+PS C:\Users\you\Projects> uv init shop
+Initialized project `shop` at `C:\Users\you\Projects\shop`
+PS C:\Users\you\Projects> cd shop
+```
+
+uv creates a folder with these files:
 
 <!-- no-verify -->
+```text
+shop/
+├── .python-version   # which Python version this project uses
+├── README.md         # a description of the project, for people
+├── main.py           # a first program, ready to run
+└── pyproject.toml    # the project's "ID card": name, Python version, libraries
+```
+
+It also starts a Git repository and a `.gitignore` for you if the folder is not inside one already.
+
+`pyproject.toml` is a plain text file. Right after `uv init` it looks like this:
+
+```toml
+[project]
+name = "shop"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+```
+
+`dependencies` is the list of libraries the project needs. It is empty for now.
+
+### Running code: `uv run`
+
+Instead of `python main.py`, you now type:
+
+```console
+PS C:\Users\you\Projects\shop> uv run main.py
+Using CPython 3.12.8
+Creating virtual environment at: .venv
+Hello from shop!
+```
+
+The first time, uv creates the virtual environment (`.venv`) on its own. You never have to "activate" anything: `uv run` always uses the project's environment. If you see `(.venv)` and `activate` in online tutorials, that is the manual way uv saves you from.
+
+### Adding and removing libraries: `uv add` and `uv remove`
+
+```console
+PS C:\Users\you\Projects\shop> uv add requests
+Resolved 6 packages in 412ms
+Installed 5 packages in 38ms
+ + requests==2.32.3
+ ...
+```
+
+uv downloads `requests` (and the libraries `requests` itself needs), installs it in `.venv`, and writes it in `pyproject.toml`:
+
+```toml
+dependencies = [
+    "requests>=2.32.3",
+]
+```
+
+To remove a library: `uv remove requests`.
+
+Some libraries are only for **you, the developer**, not for the program itself: tools to test or check code. Add them with `--dev`:
+
+```powershell
+uv add --dev pytest
+```
+
+They go into a separate list in `pyproject.toml`, called `dev`.
+
+### `pyproject.toml` and `uv.lock`: both go into Git
+
+After `uv add`, a new file appears: `uv.lock`.
+
+- `pyproject.toml` says **what** the project needs, in general terms: "requests, version 2.32.3 or newer". You read and edit this one.
+- `uv.lock` records the **exact** versions that were installed, of every library and of the libraries they depend on. uv writes it; you never edit it by hand.
+
+Both go into Git. With them, anyone gets exactly the same libraries you have. The `.venv` folder, on the other hand, does **not** go into Git: it is big, it is different on each computer, and it can always be recreated. `uv init` already lists it in `.gitignore`:
+
 ```text
 .venv/
-__pycache__/
 ```
 
-`__pycache__` is a folder Python creates to speed things up. It can always be recreated, so it does not go into Git either.
+### Cloning someone's project: `uv sync`
 
-### The full routine for a new project
+When you clone a project that uses uv, its `.venv` is not there (it was never committed). One command rebuilds it from `pyproject.toml` and `uv.lock`:
+
+```console
+PS C:\Users\you\Projects> git clone https://github.com/someone/shop
+PS C:\Users\you\Projects> cd shop
+PS C:\Users\you\Projects\shop> uv sync
+```
+
+In fact, `uv run` also does this automatically when something is missing. `uv sync` is just the explicit way.
+
+### A one-off: `uv run --with`
+
+Sometimes you want to try a library in a single script without adding it to any project:
 
 ```powershell
-mkdir my-project
-cd my-project
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install pytest
-python -m pip freeze > requirements.txt
+uv run --with requests try_requests.py
 ```
 
-Then create `.gitignore` with `.venv/` inside, and start coding. In Cursor, if it asks "Select interpreter", choose the one inside `.venv`.
+uv installs `requests` in a temporary place just for this run. Nothing changes in `pyproject.toml`.
 
-### Using a library: a first taste
+### If you see pip in a tutorial
 
-Once a library is installed, you use it like any module. For example, `requests` downloads web pages (you will learn it properly in module 10):
+Most tutorials online still use pip. Translate them like this:
+
+| You see | You type |
+|---|---|
+| `pip install flask` | `uv add flask` |
+| `pip install pytest` (a tool for you) | `uv add --dev pytest` |
+| `python app.py` | `uv run app.py` |
+| `pytest` | `uv run pytest` |
+| `python -m venv .venv` and `activate` | nothing: uv does it for you |
+| `pip install -r requirements.txt` | `uv sync` |
+| `requirements.txt` | `pyproject.toml` + `uv.lock` |
+
+### ruff: checking your code
+
+A **linter** reads your code without running it and points out problems: an import you never use, a variable that does not exist, a comparison that is probably a mistake. ruff is a very fast linter (and formatter) for Python. Add it as a developer tool:
+
+```powershell
+uv add --dev ruff
+```
+
+Imagine this file:
 
 <!-- no-verify -->
 ```python
-import requests
+# prices.py
+import random
 
-response = requests.get("https://example.com")
-print(response.status_code)
+
+def with_tax(price):
+    total = price * 1.10
+    return round(price * 1.10, 2)
 ```
+
+Ask ruff to check it:
 
 ```console
-(.venv) PS C:\Users\you\Projects\my-project> python main.py
-200
+PS C:\Users\you\Projects\shop> uv run ruff check
+prices.py:2:8: F401 [*] `random` imported but unused
+prices.py:6:5: F841 Local variable `total` is assigned to but never used
+Found 2 errors.
+[*] 1 fixable with the `--fix` option.
 ```
 
-How do you learn a library you have never seen? Look it up on [pypi.org](https://pypi.org): each library page has a link to its documentation, which usually starts with a short "Quickstart" example. Start there.
+Each line says the file, the line and the column, a code (`F401`), and what is wrong. Neither problem breaks the program, but both are clutter that confuses whoever reads the code next (including future you).
+
+Problems marked `[*]` can be fixed automatically:
+
+```powershell
+uv run ruff check --fix
+```
+
+### ruff: formatting your code
+
+A **formatter** rewrites the *layout* of your code, never what it does: spaces around `=`, blank lines between functions, quotes, long lines. Before:
+
+<!-- no-verify -->
+```python
+def area(width,height):
+    return width*height
+items=['cup','plate']
+```
+
+Run:
+
+```powershell
+uv run ruff format
+```
+
+After:
+
+<!-- no-verify -->
+```python
+def area(width, height):
+    return width * height
+
+
+items = ["cup", "plate"]
+```
+
+Same program, easier to read. Because everybody's code ends up formatted the same way, nobody has to argue about style.
+
+### Configuring ruff in `pyproject.toml`
+
+ruff works with no configuration at all. If you want to change something, add a `[tool.ruff]` section to `pyproject.toml`. This course itself uses:
+
+```toml
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B", "I", "UP"]
+```
+
+`line-length` is the longest line allowed. `select` picks families of rules: for example `F` finds mistakes like unused imports, and `I` keeps imports in order. You do not need to understand every family now; start with these and adjust later.
+
+### ruff in the editor
+
+Install the **Ruff** extension in Cursor or VS Code (Extensions panel, search "Ruff", the one by Astral). Then turn on **Format On Save** in the settings (search "format on save"). From then on, problems are underlined while you type, and every `Ctrl+S` formats the file.
+
+### Convention over configuration, again
+
+In module 00 you met **convention over configuration**: agreeing on a default (all projects in `Projects`, no spaces in names) so you stop making the same small decisions over and over. uv and ruff are the same idea for code. Every project has the same shape (`pyproject.toml`, `uv.lock`, `.venv`), runs with the same command (`uv run`), and is formatted the same way (`ruff format`). Open any uv project and you already know where everything is.
 
 ## Common mistakes
 
-### "running scripts is disabled on this system" (Windows)
+### `uv` is not recognized
 
 ```console
-PS C:\Users\you\Projects\my-project> .venv\Scripts\Activate.ps1
-.venv\Scripts\Activate.ps1 : File C:\Users\you\Projects\my-project\.venv\Scripts\Activate.ps1 cannot be loaded because running scripts is disabled on this system.
+PS C:\Users\you> uv --version
+uv : The term 'uv' is not recognized as the name of a cmdlet, function, script file, or operable program.
 ```
 
-This is the most common problem on Windows. For safety, PowerShell blocks scripts by default, and `Activate.ps1` is a script. You can allow scripts that you created yourself, only for your user, with:
+The terminal was opened **before** uv was installed, so it does not know about it yet. **Fix:** close the terminal, open a new one, try again. If it still fails, run the installer again and read its last lines: it tells you which folder it added to the PATH.
 
-```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+### Running with `python` instead of `uv run`
+
+```console
+PS C:\Users\you\Projects\shop> python try_requests.py
+ModuleNotFoundError: No module named 'requests'
 ```
 
-Answer `Y` if it asks. `RemoteSigned` means "run scripts made on this computer; scripts downloaded from the internet must be signed". You only need to do this once. On a work computer, this may be blocked by the IT team; if so, ask them, or use the Command Prompt instead of PowerShell with `.venv\Scripts\activate.bat`.
+You installed `requests` with `uv add`, so it lives in the project's `.venv`. Plain `python` uses the Python of your computer, which knows nothing about `.venv`. **Fix:** `uv run try_requests.py`.
 
-### `ModuleNotFoundError` after installing
+### Running uv commands in the wrong folder
 
-<!-- error -->
-```python
-import requests_library_that_is_not_installed
-```
-
-```text
-Traceback (most recent call last):
-ModuleNotFoundError: No module named 'requests_library_that_is_not_installed'
-```
-
-You installed the library, but Python says it does not exist. Almost always, one of these:
-
-- **The environment is not active** in this terminal. Look for `(.venv)` at the start of the prompt. If it is not there, activate.
-- **You installed with a different Python.** Use `python -m pip install ...` in the same terminal where you run `python main.py`.
-- **Cursor is using another interpreter.** Check the Python version shown in the bottom bar of Cursor and select the one in `.venv`.
+`uv add` and `uv run` look for `pyproject.toml` in the current folder (and the folders above it). If you are in `Projects` instead of `Projects\shop`, uv says there is no project, or changes the wrong one. **Fix:** check where you are with `pwd` and `cd` into the project folder first.
 
 ### Committing the `.venv` folder
 
-You run `git status` and see thousands of new files inside `.venv`. Do not commit them. Add `.venv/` to `.gitignore` first. If you already committed it, remove it from Git (but not from your disk) with `git rm -r --cached .venv`, then commit.
+If `git status` lists hundreds of files inside `.venv`, it is missing from `.gitignore`. **Fix:** add the line `.venv/` to `.gitignore` before committing. Commit `pyproject.toml` and `uv.lock` instead: they are enough to rebuild everything.
 
-### Forgetting to update `requirements.txt`
+### Editing `uv.lock` by hand
 
-You installed a new library, your program works, you push it. Your friend clones it, runs `pip install -r requirements.txt`, and gets `ModuleNotFoundError`. The list was old. After installing something new, run `python -m pip freeze > requirements.txt` again and commit the change.
+`uv.lock` is written by uv. If you edit it, the next `uv sync` may fail or undo your change. **Fix:** change libraries only with `uv add` and `uv remove`.
 
 ## Exercises
 
 ### Predict the output
 
-#### Exercise 1: Which pip?
+#### Exercise 1: Which files go into Git?
 
-You have two terminals open. In terminal 1 the prompt starts with `(.venv)`. In terminal 2 it does not. In terminal 1 you run `python -m pip install pytest`. Then, in terminal 2, inside the same folder, you run `python -m pytest`. What happens?
+A uv project contains: `main.py`, `pyproject.toml`, `uv.lock`, `.venv/`, `.python-version`, `README.md`, `__pycache__/`. Which ones do you commit?
 
 <details>
 <summary>Show answer</summary>
 
-Terminal 2 says something like `No module named pytest`. pytest was installed inside `.venv`, but terminal 2 is not using the environment, so it uses the global Python, where pytest is not installed. Activate the environment in terminal 2 too.
+Commit `main.py`, `pyproject.toml`, `uv.lock`, `.python-version` and `README.md`.
+
+Do not commit `.venv/` (big, different on each computer, rebuilt by `uv sync`) or `__pycache__/` (files Python creates by itself).
 
 </details>
 
-#### Exercise 2: Read the requirements
+#### Exercise 2: What changes in `pyproject.toml`?
 
-What does this `requirements.txt` say, and what command installs it?
+You run these commands, in this order, in a new project. What does the `dependencies` list contain at the end?
 
-<!-- no-verify -->
-```text
-flask==3.0.3
-pytest==8.3.3
+```powershell
+uv add requests
+uv add flask
+uv add --dev ruff
+uv remove requests
 ```
 
 <details>
 <summary>Show answer</summary>
 
-The project needs flask version 3.0.3 and pytest version 8.3.3, exactly. With the environment active, install both with:
+Only `flask`. `requests` was added and then removed, and `ruff` went to the separate `dev` list because of `--dev`.
 
-```powershell
-python -m pip install -r requirements.txt
+</details>
+
+#### Exercise 3: Read the ruff report
+
+What is ruff complaining about?
+
+```text
+report.py:1:8: F401 [*] `json` imported but unused
+report.py:9:5: F841 Local variable `count` is assigned to but never used
 ```
+
+<details>
+<summary>Show answer</summary>
+
+1. Line 1 imports `json`, but the file never uses it. `uv run ruff check --fix` removes the line.
+2. Line 9 creates a variable `count` that is never read afterwards. Either the line is useless (delete it) or you forgot to use `count` somewhere (a real bug). ruff cannot know which, so it does not fix it for you.
 
 </details>
 
 ### Fix the bug
 
-#### Exercise 3: The forgotten step
+#### Exercise 4: The tutorial from the internet
 
-Someone runs these commands in a brand new terminal and gets `ModuleNotFoundError: No module named 'pytest'` at the end. What is missing?
+A tutorial says:
 
-```powershell
-cd my-project
+```bash
 python -m venv .venv
-python -m pip install pytest
-deactivate
-.venv\Scripts\Activate.ps1
-python -m pytest
+source .venv/bin/activate
+pip install flask
+python app.py
 ```
+
+Rewrite it the uv way, starting from a new project called `site`.
 
 <details>
 <summary>Show answer</summary>
 
-The environment was not activated **before** installing. pytest went to the global Python (or failed). Then the environment was activated, and inside it pytest does not exist. (`deactivate` also had nothing to deactivate.) The correct order:
+```powershell
+uv init site
+cd site
+uv add flask
+uv run app.py
+```
+
+No virtual environment commands: `uv add` and `uv run` create and use `.venv` automatically.
+
+</details>
+
+#### Exercise 5: It worked on my computer
+
+Your friend cloned your project and typed `python main.py`. She got `ModuleNotFoundError: No module named 'requests'`. What should she type instead?
+
+<details>
+<summary>Show answer</summary>
 
 ```powershell
-cd my-project
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install pytest
-python -m pytest
+uv run main.py
 ```
+
+`uv run` notices that `.venv` is missing, rebuilds it from `pyproject.toml` and `uv.lock` (like `uv sync`), and then runs the program inside it.
 
 </details>
 
 ### Write it
 
-#### Exercise 4: Set up a project from zero
+#### Exercise 6: A project from zero
 
-On your computer, in your `Projects` folder:
-
-1. Create a folder `weather-app` and enter it.
-2. Create a virtual environment called `.venv` and activate it.
-3. Install `pytest`.
-4. Save the list of libraries to `requirements.txt`.
-5. Create a `.gitignore` that ignores `.venv/` and `__pycache__/`.
-6. Run `python -m pip list` and check pytest is there.
-
-Write down the commands you used.
+Write the commands to: create a project `notes-app`, enter it, add `requests` as a library and `ruff` and `pytest` as developer tools, then check and format all the code.
 
 <details>
 <summary>Show answer</summary>
 
-On Windows (PowerShell):
-
 ```powershell
-cd ~\Projects
-mkdir weather-app
-cd weather-app
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install pytest
-python -m pip freeze > requirements.txt
-python -m pip list
+uv init notes-app
+cd notes-app
+uv add requests
+uv add --dev ruff pytest
+uv run ruff check
+uv run ruff format
 ```
 
-For the `.gitignore`, create the file in Cursor with two lines:
-
-<!-- no-verify -->
-```text
-.venv/
-__pycache__/
-```
-
-On macOS or Linux, the only differences are `cd ~/Projects` and `source .venv/bin/activate`.
+You can add several libraries in one `uv add`.
 
 </details>
 
-#### Exercise 5: Rebuild from the list
+#### Exercise 7: Format by hand, then check
 
-Delete the `.venv` folder of the previous exercise (you can do it in the Cursor sidebar). Now rebuild the environment using only `requirements.txt`. Why can we delete `.venv` without fear?
+Format this code the way `ruff format` would, by hand. Then run the real `ruff format` on it and compare.
+
+<!-- no-verify -->
+```python
+def total(prices,tax):
+    return sum(prices)*(1+tax)
+basket=[2.5,4.0,1.25]
+print(total(basket,0.1))
+```
 
 <details>
 <summary>Show answer</summary>
 
-```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
+<!-- no-verify -->
+```python
+def total(prices, tax):
+    return sum(prices) * (1 + tax)
+
+
+basket = [2.5, 4.0, 1.25]
+print(total(basket, 0.1))
 ```
 
-We can delete it without fear because `.venv` has nothing we wrote: everything in it was downloaded by pip and can be downloaded again. The important part, the list of what the project needs, is in `requirements.txt`. That is also why `.venv` stays out of Git and `requirements.txt` goes in.
+Spaces after commas and around operators, and two blank lines after a function. The program itself does exactly the same thing.
 
 </details>
 
 ## Review
 
-#### Review 1: Testing (previous file)
+#### Review 1: Exceptions (previous file)
 
-What are the two naming rules pytest uses to find tests?
+What does this print?
+
+```python
+def parse_price(text):
+    try:
+        return float(text)
+    except ValueError:
+        return None
+
+
+print(parse_price("4.50"))
+print(parse_price("free"))
+```
 
 <details>
 <summary>Show answer</summary>
 
-The file name starts with `test_` (like `test_prices.py`), and each test function name starts with `test_` (like `def test_discount_of_half():`).
+```text
+4.5
+None
+```
+
+`"free"` cannot become a `float`, so `float` raises `ValueError`, and the `except` block returns `None`.
 
 </details>
 
 #### Review 2: Modules (this module)
 
-You want to practice with the `json` module, so you create a file called `json.py` with `import json` inside. What goes wrong, and how do you fix it?
+A project has `prices.py` with a function `with_tax`. Write the line, in `main.py`, that imports only that function. Then write the command to run `main.py` in a uv project.
 
 <details>
 <summary>Show answer</summary>
 
-`import json` imports **your** file, because Python looks in your folder first. Your file does not have `dumps` or `loads`, so you get an `AttributeError`. Rename your file to something like `json_practice.py` (and delete the `__pycache__` folder if one appeared).
+<!-- no-verify -->
+```python
+from prices import with_tax
+```
+
+```powershell
+uv run main.py
+```
 
 </details>
 
 ## Recap
 
-- A library is shared code. PyPI is where libraries live. pip installs them. Always use `python -m pip`.
-- One virtual environment per project: `python -m venv .venv`, then activate it (`.venv\Scripts\Activate.ps1` on Windows, `source .venv/bin/activate` on macOS/Linux). Look for `(.venv)` in the prompt.
-- `python -m pip freeze > requirements.txt` saves the list; `python -m pip install -r requirements.txt` rebuilds it.
-- `.venv/` goes in `.gitignore`; `requirements.txt` goes into Git.
-- On Windows, if activation is blocked, run `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` once.
+- **uv** installs Python, creates the project (`uv init`), installs libraries (`uv add`, `uv add --dev`) and runs code (`uv run`). No need to activate anything.
+- `pyproject.toml` lists what the project needs; `uv.lock` records the exact versions. Both go into Git. `.venv/` does not.
+- After cloning a project, `uv sync` (or just `uv run`) rebuilds `.venv`.
+- **ruff** checks code (`uv run ruff check`, `--fix`) and formats it (`uv run ruff format`). Install the Ruff extension and turn on format on save.
+- Tutorials with pip translate directly: `pip install x` becomes `uv add x`, `python file.py` becomes `uv run file.py`.
 
-**Next:** [Module 08: Objects](../mod-08-objects/README.md)
+**Next:** [Testing](testing.md)

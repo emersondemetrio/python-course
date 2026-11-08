@@ -336,11 +336,11 @@ Move `STAGES` and `StageError` into `atanor/piece.py` too, and delete `atanor/pi
 ## Checkpoint
 
 ```console
-PS C:\Users\you\Projects\atanor> python -m pytest
+PS C:\Users\you\Projects\atanor> uv run pytest
 tests/test_piece.py ...                                     [ 60%]
 tests/test_storage.py ..                                    [100%]
 5 passed in 0.03s
-PS C:\Users\you\Projects\atanor> python main.py
+PS C:\Users\you\Projects\atanor> uv run main.py
 ...
 > 3
 Which piece? blue bowl

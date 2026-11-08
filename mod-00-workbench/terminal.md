@@ -409,7 +409,7 @@ If any step did not work, read the error message: it usually says exactly what i
 - The terminal runs **text commands**. The prompt shows **which folder you are in**.
 - `pwd` shows where you are, `ls` shows what is here, `cd folder` goes into a folder, `cd ..` goes up one level.
 - **Tab** completes names. **Up arrow** repeats commands. **Ctrl + L** clears the screen.
-- `python file.py` runs a file. You must be in the **same folder** as the file.
+- `python file.py` runs a file. You must be in the **same folder** as the file. (From module 07 on, you will type `uv run file.py` instead.)
 - If the terminal says `python` is "not recognized", the problem is the **PATH**, not Python itself.
 
 **Next:** [python.md](python.md)

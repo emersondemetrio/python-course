@@ -93,10 +93,10 @@ Typing the key in every new terminal gets boring. A common solution is a file ca
 ANTHROPIC_API_KEY=sk-ant-your-key-here
 ```
 
-The package `python-dotenv` reads this file and puts its values into the environment:
+The package `python-dotenv` reads this file and puts its values into the environment. Add it to your uv project (module 7):
 
 ```powershell
-python -m pip install python-dotenv
+uv add python-dotenv
 ```
 
 <!-- no-verify -->
@@ -125,8 +125,10 @@ ANTHROPIC_API_KEY=put-your-key-here
 An **SDK** (Software Development Kit) is a library made by the provider to make calling their API easy. You could use `requests` (module 10), but the SDK handles the details for you.
 
 ```powershell
-python -m pip install anthropic
+uv add anthropic
 ```
+
+Run every example in this lesson with `uv run`, for example `uv run first_call.py`.
 
 ### Your first call
 
@@ -152,7 +154,7 @@ print(message.content[0].text)
 ```
 
 ```console
-(.venv) PS C:\Users\you\Projects\ai> python first_call.py
+PS C:\Users\you\Projects\ai> uv run first_call.py
 1. Spinach fried rice: stir-fry cooked rice with spinach, garlic and scrambled eggs.
 2. Baked eggs on spinach rice: spread rice in a dish, add spinach, crack eggs on top and bake.
 3. Rice bowl: warm rice topped with sauteed spinach and a soft-boiled egg.
@@ -455,7 +457,7 @@ print(f"Tokens: {message.usage.input_tokens} in, {message.usage.output_tokens} o
 ```
 
 ```console
-(.venv) PS C:\Users\you\Projects\ai> python assistant.py
+PS C:\Users\you\Projects\ai> uv run assistant.py
 Ask me something: What is a variable in Python?
 
 A variable is a name that points to a value, like a label on a box...
@@ -469,14 +471,14 @@ Tokens: 41 in, 87 out
 
 #### Review 1: .gitignore check (module 5)
 
-Which of these files should be listed in `.gitignore` in an AI project, and why? `app.py`, `.env`, `.env.example`, `.venv/`, `requirements.txt`, `__pycache__/`
+Which of these files should be listed in `.gitignore` in an AI project, and why? `app.py`, `.env`, `.env.example`, `.venv/`, `pyproject.toml`, `uv.lock`, `__pycache__/`
 
 <details>
 <summary>Show answer</summary>
 
-Ignore `.env` (it has your secret key), `.venv/` (it is big and anyone can recreate it with `pip install -r requirements.txt`) and `__pycache__/` (files Python creates automatically).
+Ignore `.env` (it has your secret key), `.venv/` (it is big and anyone can recreate it with `uv sync`) and `__pycache__/` (files Python creates automatically).
 
-Commit `app.py`, `.env.example` (it only has fake values and shows which variables are needed) and `requirements.txt`.
+Commit `app.py`, `.env.example` (it only has fake values and shows which variables are needed), `pyproject.toml` and `uv.lock` (together they say exactly which libraries the project needs).
 
 </details>
 

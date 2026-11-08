@@ -32,22 +32,16 @@ Everything runs on your own computer. The browser and the server talk through `h
 
 ### Step 1: Install Flask
 
-With the virtual environment active, install Flask and add it to `requirements.txt`.
+Add Flask to the project.
 
 <details>
 <summary>Show answer</summary>
 
 ```powershell
-.venv\Scripts\Activate.ps1
-python -m pip install flask
+uv add flask
 ```
 
-`requirements.txt`:
-
-```text
-flask
-pytest
-```
+uv installs Flask in `.venv` and records it in `pyproject.toml` and `uv.lock`. Commit both files.
 
 </details>
 
@@ -115,7 +109,7 @@ if __name__ == "__main__":
 ```
 
 ```powershell
-python app.py
+uv run app.py
 ```
 
 The browser shows your pieces as JSON. That is what an API returns: data, not a page.
@@ -236,7 +230,7 @@ with urlopen(f"{BASE}/pieces") as response:
 ```
 
 ```console
-PS C:\Users\you\Projects\atanor> python try_api.py
+PS C:\Users\you\Projects\atanor> uv run try_api.py
 201 {'clay': 'stoneware', 'created': '2026-11-08', 'id': 3, 'name': 'Rice bowl', 'stage': 'modeled', ...}
 1 Blue bowl bisque_fired
 2 Small vase drying
@@ -400,7 +394,7 @@ def test_missing_piece(client):
 ## Checkpoint
 
 ```console
-PS C:\Users\you\Projects\atanor> python app.py
+PS C:\Users\you\Projects\atanor> uv run app.py
  * Running on http://127.0.0.1:5000
 ```
 
@@ -409,7 +403,7 @@ Open `http://127.0.0.1:5000` in the browser:
 1. Add a piece: it appears in the list as `modeled`.
 2. Click "Advance" a few times: the stage changes, and the button disappears at `glaze_fired`.
 3. Stop the server (`Ctrl+C`), start it again, reload the page: the pieces are still there.
-4. `python -m pytest` passes.
+4. `uv run pytest` passes.
 
 ## Commit
 

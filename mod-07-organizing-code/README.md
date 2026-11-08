@@ -8,17 +8,17 @@ None of these topics adds a new "power" to your programs. They make your program
 
 - How to split your code into several files (**modules**) and folders (**packages**), and import between them.
 - How to handle errors on purpose with `try` and `except`, and how to signal errors with `raise`.
+- How to create a project, install libraries and run your code with **uv**, and keep your code clean with **ruff**.
 - How to write small programs that check your other programs (**tests**), and run them with `pytest`.
-- How to install libraries with `pip`, and why each project should have its own **virtual environment**.
 
 ## Files, in order
 
 1. [modules.md](modules.md)
 2. [exceptions.md](exceptions.md)
-3. [testing.md](testing.md)
-4. [pip-and-venv.md](pip-and-venv.md)
+3. [uv-and-ruff.md](uv-and-ruff.md)
+4. [testing.md](testing.md)
 
-`testing.md` uses `pytest`, a library you need to install. The installation is explained step by step inside the lesson, and the full story of installing libraries comes in `pip-and-venv.md`. If you prefer, you can read `pip-and-venv.md` first.
+`uv-and-ruff.md` comes before `testing.md` on purpose: `pytest` is a library, and uv is how you install it.
 
 ## You are ready for the next module when
 
@@ -27,6 +27,6 @@ None of these topics adds a new "power" to your programs. They make your program
 - [ ] You can catch a specific error, like `ValueError`, without hiding all the others.
 - [ ] You can use `raise` in your own function and explain why it is better than returning a fake value.
 - [ ] You can write a test file with two or three tests and run it with `pytest`.
-- [ ] You can create and activate a virtual environment, install a library, and save it in `requirements.txt`.
+- [ ] You can create a project with `uv init`, add a library with `uv add`, run code with `uv run`, and check and format it with ruff.
 
 **Next:** [Modules](modules.md)

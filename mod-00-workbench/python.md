@@ -107,6 +107,8 @@ The `>>>` is Python's own prompt. It means "type a Python line".
 
 In this course you will mostly write **files**. Use the REPL as a scratch pad.
 
+> **Coming later:** until module 06 you run files with `python file.py`. In module 07 you will meet **uv**, a tool that manages your projects and their libraries, and from then on you will run files with `uv run file.py`. The idea is exactly the same.
+
 ### Syntax: the grammar of Python
 
 **Syntax** is the set of rules for how code must be written: where the parentheses go, where the quotes go, which words are special. Python is strict about it. A missing quote or parenthesis means Python cannot even start running your file.

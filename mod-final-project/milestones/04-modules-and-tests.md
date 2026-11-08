@@ -6,14 +6,15 @@ Split `atanor.py` into a **package** with one file per responsibility, replace t
 
 ## Requires
 
-Module 7: modules and packages, exceptions, `pytest`, `pip` and virtual environments.
+Module 7: modules and packages, exceptions, uv and ruff, `pytest`.
 
 ## What you will build
 
 ```text
 atanor/
 ├── main.py              # only the menu: asks, shows, calls
-├── requirements.txt
+├── pyproject.toml       # created by uv: project info and libraries
+├── uv.lock              # created by uv: exact library versions
 ├── atanor/
 │   ├── __init__.py      # empty: it marks the folder as a package
 │   ├── pieces.py        # the rules: STAGES, make_piece, find_piece, advance...
@@ -28,29 +29,34 @@ Why split? `pieces.py` has rules that never touch the keyboard or the disk. That
 
 ## Steps
 
-### Step 1: A virtual environment
+### Step 1: Turn the folder into a uv project
 
-Create a virtual environment, activate it and install `pytest`. Then save the list of libraries in `requirements.txt`.
+Your `atanor` folder already has code and a Git history. Turn it into a uv project **without** creating extra files, then add `pytest` and `ruff` as developer tools.
+
+<details>
+<summary>Hint</summary>
+
+`uv init --bare` creates only `pyproject.toml`, so it does not touch your existing files. Developer tools are added with `--dev`.
+
+</details>
 
 <details>
 <summary>Show answer</summary>
 
 ```powershell
 cd ~\Projects\atanor
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install pytest
+uv init --bare
+uv add --dev pytest ruff
 ```
 
-On macOS or Linux, activate with `source .venv/bin/activate`.
+Now the folder has `pyproject.toml` (the project and its libraries) and `uv.lock` (the exact versions). Both go into Git. `.venv/` is already in your `.gitignore`; someone who clones the project rebuilds it with `uv sync`.
 
-Content of `requirements.txt`:
+Check that everything is tidy:
 
-```text
-pytest
+```powershell
+uv run ruff check
+uv run ruff format
 ```
-
-`.venv/` is already in your `.gitignore`. Someone else recreates it with `python -m pip install -r requirements.txt`.
 
 </details>
 
@@ -314,7 +320,7 @@ def test_find_piece_ignores_case():
 Run from the project folder:
 
 ```powershell
-python -m pytest
+uv run pytest
 ```
 
 ```console
@@ -322,7 +328,7 @@ tests/test_pieces.py ....                                   [100%]
 4 passed in 0.02s
 ```
 
-Each dot is a test that passed. `python -m pytest` (instead of just `pytest`) makes sure Python finds the `atanor` package from the project folder.
+Each dot is a test that passed. `uv run pytest` (instead of just `pytest`) makes sure Python finds the `atanor` package from the project folder.
 
 </details>
 
@@ -355,11 +361,11 @@ def test_missing_file_gives_empty_list(tmp_path):
 ## Checkpoint
 
 ```console
-PS C:\Users\you\Projects\atanor> python -m pytest
+PS C:\Users\you\Projects\atanor> uv run pytest
 tests/test_pieces.py ....                                   [100%]
 tests/test_storage.py ..                                    [100%]
 6 passed in 0.03s
-PS C:\Users\you\Projects\atanor> python main.py
+PS C:\Users\you\Projects\atanor> uv run main.py
 
 1. Add a piece
 2. List pieces

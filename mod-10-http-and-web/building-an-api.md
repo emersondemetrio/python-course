@@ -16,27 +16,16 @@ Flask is the building and the waiters: it receives the orders, finds the right c
 
 ### Setting up the project
 
-Create a new folder for this file's examples, a virtual environment, and install Flask:
+Create a new uv project for this file's examples and add Flask to it (module 7):
 
 ```powershell
-# Windows (PowerShell)
 cd ~\Projects
-mkdir todo-api
+uv init todo-api
 cd todo-api
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install flask
+uv add flask
 ```
 
-```bash
-# macOS / Linux
-cd ~/Projects
-mkdir todo-api
-cd todo-api
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install flask
-```
+The same commands work on macOS and Linux (with `~/Projects`).
 
 ### Hello, server
 
@@ -62,11 +51,11 @@ Line by line:
 Run it from the terminal, in the project folder:
 
 ```powershell
-flask --app app run --debug
+uv run flask --app app run --debug
 ```
 
 ```console
-(.venv) PS C:\Users\you\Projects\todo-api> flask --app app run --debug
+PS C:\Users\you\Projects\todo-api> uv run flask --app app run --debug
  * Serving Flask app 'app'
  * Debug mode: on
  * Running on http://127.0.0.1:5000
@@ -303,7 +292,7 @@ print(requests.get(f"{base}/todos", timeout=5).json())
 ```
 
 ```console
-(.venv) PS C:\Users\you\Projects\todo-api> python try_api.py
+PS C:\Users\you\Projects\todo-api> uv run try_api.py
 201 {'done': False, 'id': 3, 'title': 'Read a chapter'}
 [{'done': False, 'id': 1, 'title': 'Buy coffee'}, {'done': True, 'id': 2, 'title': 'Water the plants'}, {'done': False, 'id': 3, 'title': 'Read a chapter'}]
 ```
@@ -411,7 +400,7 @@ Address already in use
 Port 5000 is in use by another program.
 ```
 
-Another server (maybe your own, in another terminal) is already using port 5000. Stop it with `Ctrl+C`, or run on another port: `flask --app app run --debug --port 5001`.
+Another server (maybe your own, in another terminal) is already using port 5000. Stop it with `Ctrl+C`, or run on another port: `uv run flask --app app run --debug --port 5001`.
 
 ### 405 Method Not Allowed
 
@@ -689,7 +678,7 @@ Output:
 ## Recap
 
 - Flask turns functions into routes: `@app.route("/path", methods=["GET"])` above a function that returns the response.
-- Run it with `flask --app app run --debug` and open `http://localhost:5000`.
+- Run it with `uv run flask --app app run --debug` and open `http://localhost:5000`.
 - Return JSON with `jsonify(...)`; return a different status code with `return jsonify(...), 404`.
 - Read values from the path with `<int:id>`, from the query string with `request.args`, and from a JSON body with `request.get_json()`.
 - A web page served by Flask can call your API with `fetch()`: the server sends data, the page's JavaScript shows it.

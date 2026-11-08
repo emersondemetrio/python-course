@@ -72,15 +72,15 @@ With `print`, **you** have to look at the output and decide if it is right. With
 
 Writing `assert` lines at the bottom of your file works, but it gets messy. `pytest` is a library that organizes this. It is the most popular testing tool in Python.
 
-`pytest` does not come with Python. You install it with `pip` (the full story is in the next lesson, [pip-and-venv.md](pip-and-venv.md)). In the terminal, inside your project folder:
+`pytest` does not come with Python. It is a tool for you, the developer, so you add it to your uv project with `--dev` (you learned this in [uv-and-ruff.md](uv-and-ruff.md)). In the terminal, inside your project folder:
 
 ```powershell
-python -m pip install pytest
+uv add --dev pytest
 ```
 
 ### Writing tests for pytest
 
-Imagine a project folder with this code:
+Imagine a uv project, created with `uv init shop` as in the previous lesson, with this code (the files `uv init` made, like `pyproject.toml`, are left out of the picture):
 
 <!-- no-verify -->
 ```text
@@ -126,10 +126,10 @@ Give tests long, descriptive names. When one fails, the name tells you what brok
 
 ### Running the tests
 
-In the terminal, inside the `shop` folder, type `pytest` (or `python -m pytest` if `pytest` alone is not found):
+In the terminal, inside the `shop` folder, type `uv run pytest`:
 
 ```console
-PS C:\Users\you\Projects\shop> python -m pytest
+PS C:\Users\you\Projects\shop> uv run pytest
 ============================= test session starts ==============================
 collected 3 items
 
@@ -143,7 +143,7 @@ Each dot `.` is a test that passed. pytest found the file and the three function
 Add `-v` (verbose) to see each test by name:
 
 ```console
-PS C:\Users\you\Projects\shop> python -m pytest -v
+PS C:\Users\you\Projects\shop> uv run pytest -v
 test_prices.py::test_with_tax_adds_ten_percent PASSED                    [ 33%]
 test_prices.py::test_discount_of_half PASSED                             [ 66%]
 test_prices.py::test_discount_of_zero_changes_nothing PASSED             [100%]
@@ -156,7 +156,7 @@ test_prices.py::test_discount_of_zero_changes_nothing PASSED             [100%]
 Now break `with_tax` on purpose (change `1.10` to `1.01`) and run again:
 
 ```console
-PS C:\Users\you\Projects\shop> python -m pytest
+PS C:\Users\you\Projects\shop> uv run pytest
 collected 3 items
 
 test_prices.py F..                                                       [100%]
@@ -237,7 +237,7 @@ Test what the function **does** (the result), not how it does it. That way you c
 ### The test file or function does not start with `test_`
 
 ```console
-PS C:\Users\you\Projects\shop> python -m pytest
+PS C:\Users\you\Projects\shop> uv run pytest
 collected 0 items
 
 ============================ no tests ran in 0.01s =============================
@@ -279,7 +279,7 @@ PS C:\Users\you\Projects\shop> pytest
 pytest : The term 'pytest' is not recognized as the name of a cmdlet, function, script file, or operable program.
 ```
 
-Either pytest is not installed in the Python you are using, or its folder is not in the PATH. Use `python -m pytest`, which asks your Python directly. If it says `No module named pytest`, install it with `python -m pip install pytest`.
+pytest is installed inside the project's `.venv`, and the terminal on its own does not look there. **Fix:** always start it with `uv run pytest`, which runs it inside the project. If uv then says it cannot find `pytest`, add it first with `uv add --dev pytest`.
 
 ## Exercises
 
@@ -406,7 +406,7 @@ Create a folder `temps` with:
 1. `convert.py` with `celsius_to_fahrenheit(c)` (formula: `c * 9 / 5 + 32`).
 2. `test_convert.py` with three tests: water freezes (0 gives 32), water boils (100 gives 212), and body temperature (37 gives 98.6, use `round(..., 1)`).
 
-Run `python -m pytest -v`.
+Run `uv run pytest -v`.
 
 <details>
 <summary>Show answer</summary>
@@ -434,7 +434,7 @@ def test_body_temperature():
 ```
 
 ```console
-PS C:\Users\you\Projects\temps> python -m pytest -v
+PS C:\Users\you\Projects\temps> uv run pytest -v
 test_convert.py::test_water_freezes PASSED                               [ 33%]
 test_convert.py::test_water_boils PASSED                                 [ 66%]
 test_convert.py::test_body_temperature PASSED                            [100%]
@@ -473,7 +473,7 @@ def test_divide_by_zero_is_an_error():
 
 ## Review
 
-#### Review 1: Exceptions (previous file)
+#### Review 1: Exceptions (this module)
 
 What does this print?
 
@@ -530,9 +530,9 @@ A test needs to get the result in its hands to compare it: `assert with_tax(10) 
 ## Recap
 
 - `assert condition` does nothing if the condition is true and raises `AssertionError` if it is false.
-- pytest finds tests by name: files `test_*.py`, functions `def test_*():`. Run with `python -m pytest` (`-v` for details).
+- pytest finds tests by name: files `test_*.py`, functions `def test_*():`. Run with `uv run pytest` (`-v` for details).
 - `.` passed, `F` failed. A failure shows the line and the real values.
 - `with pytest.raises(ValueError):` tests that an error happens.
 - Test a normal case, an edge case and a wrong input. Test results, not the insides.
 
-**Next:** [pip and virtual environments](pip-and-venv.md)
+**Next:** [Module 08: Objects](../mod-08-objects/README.md)

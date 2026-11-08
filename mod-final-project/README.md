@@ -54,7 +54,8 @@ This is where you will be at the end. Do not create it now: it grows one milesto
 ```text
 atanor/
 ├── README.md              # what the app is and how to run it
-├── requirements.txt       # libraries the app needs (flask, pytest, anthropic)
+├── pyproject.toml         # project info and libraries (flask, anthropic; pytest and ruff for development)
+├── uv.lock                # exact library versions, written by uv
 ├── .gitignore             # files Git must ignore (database, virtual environment...)
 ├── main.py                # the terminal menu (milestone 4)
 ├── app.py                 # the web server (milestone 7)
