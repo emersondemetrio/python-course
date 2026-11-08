@@ -12,6 +12,8 @@ You have already met everything here in class. Lists and loops get their full le
 - Open the **Hint** only if you are stuck for more than a few minutes. Open the **Answer** only after trying.
 - If an answer surprises you, do not just read it: type it, run it, and change something to see what happens.
 
+Want more? There are more standalone exercises, without answers, in [mod-extra](../mod-extra/README.md).
+
 ---
 
 ## Part 1: Interpolation (f-strings)

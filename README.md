@@ -37,6 +37,7 @@ Everything is explained from zero. Every new word is defined the first time it a
 | [09 · Databases](mod-09-databases/) | SQL basics, SQLite | **Milestone 6:** data moves from JSON to SQLite |
 | [10 · HTTP and the web](mod-10-http-and-web/) | How the web works, calling APIs, building an API with Flask | **Milestone 7:** a web API and an HTML/CSS/JS interface |
 | [11 · AI](mod-11-ai/) | What an LLM is, calling an LLM, writing prompts | **Milestone 8:** suggestions, first by rules, then with an LLM |
+| [Extra exercises](mod-extra/) | Standalone exercises to practice on your own, without answers | |
 | [Final project](mod-final-project/) | Everything together | The finished ceramics studio manager |
 
 Each module folder has a `README.md` with its goals, the files to read in order, and a checklist that tells you when you are ready to move on.
