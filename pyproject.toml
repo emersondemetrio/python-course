@@ -1,0 +1,17 @@
+[project]
+name = "python-course"
+version = "0.1.0"
+description = "A beginner-friendly Python course: from the terminal to a full app with a database, HTTP and AI."
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = ["ruff"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+# Error-prone code (F, E, B), import order (I) and modern syntax (UP).
+select = ["E", "F", "W", "B", "I", "UP"]
