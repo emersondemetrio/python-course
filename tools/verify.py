@@ -8,7 +8,7 @@ Markdown rules:
   of the text block must match the last line of the error.
 
 Also flags em dashes, <summary> lines without a blank line after them, and runs
-each module's guide.py with "all" to make sure every item works.
+each module's guide.py to make sure it finishes without errors.
 
 Usage: uv run tools/verify.py [files or folders]   (default: the whole course)
 """
@@ -125,8 +125,14 @@ def check_markdown(path):
 
 
 def check_guide(path):
-    code, _, err = run_python([os.path.basename(path), "all"], os.path.dirname(path) or ".")
-    return [f"{path}: 'all' failed\n{err.strip()[-400:]}"] if code != 0 else []
+    folder = os.path.dirname(path) or "."
+    before = set(os.listdir(folder))
+    code, _, err = run_python([os.path.basename(path)], folder)
+    problems = [f"{path}: failed\n{err.strip()[-400:]}"] if code != 0 else []
+    left = set(os.listdir(folder)) - before
+    if left:
+        problems.append(f"{path}: left files behind: {sorted(left)}")
+    return problems
 
 
 def collect(targets):
