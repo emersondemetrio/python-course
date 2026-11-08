@@ -574,4 +574,4 @@ Why `None` and not `0`? Because 0 could be a real answer (`0 / 5` is 0). `None` 
 - For wrong results without a crash, print the variables (`f"DEBUG total={total}"`) or use the debugger: breakpoint, F5, F10, F11.
 - Change one thing at a time, and save before running.
 
-**Next:** [Module 04: Files](../module-04-files/README.md)
+**Next:** [Module 04: Files](../mod-04-files/README.md)

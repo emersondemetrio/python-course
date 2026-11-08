@@ -519,4 +519,4 @@ from shop import Product
 - `isinstance(obj, Class)` checks the kind of an object; a child object counts as its parent too.
 - Use inheritance only for "is a". For "has a", store an object as an attribute. When in doubt, keep it simple.
 
-**Next:** [Module 09: Databases](../module-09-databases/README.md)
+**Next:** [Module 09: Databases](../mod-09-databases/README.md)

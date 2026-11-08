@@ -582,4 +582,4 @@ The first two print `You have 3 notes`. The third crashes with `TypeError: can o
 - Functions that **read** should `return` the data; functions that **show** should print it.
 - Define everything first, then call `main()` on the last line.
 
-**Next:** [Module 05: Git and GitHub](../module-05-git-and-github/README.md)
+**Next:** [Module 05: Git and GitHub](../mod-05-git-and-github/README.md)

@@ -535,4 +535,4 @@ Output:
 - Read it from the middle: "for each item in items, keep this".
 - If it is long, confusing, or only prints things, use a normal loop.
 
-**Next:** [Module 07: Organizing code](../module-07-organizing-code/README.md)
+**Next:** [Module 07: Organizing code](../mod-07-organizing-code/README.md)

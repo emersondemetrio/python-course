@@ -35,4 +35,4 @@ Estimated time: 2 to 3 study sessions of about 1 hour. Most of the practice here
 - [ ] Push your `notes` project to GitHub and see it on the website
 - [ ] Write a README with a title, a list, a link and a code block
 
-**Next module:** [Module 06: Data structures](../module-06-data-structures/README.md)
+**Next module:** [Module 06: Data structures](../mod-06-data-structures/README.md)

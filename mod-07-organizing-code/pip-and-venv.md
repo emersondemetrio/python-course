@@ -404,4 +404,4 @@ You want to practice with the `json` module, so you create a file called `json.p
 - `.venv/` goes in `.gitignore`; `requirements.txt` goes into Git.
 - On Windows, if activation is blocked, run `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` once.
 
-**Next:** [Module 08: Objects](../module-08-objects/README.md)
+**Next:** [Module 08: Objects](../mod-08-objects/README.md)

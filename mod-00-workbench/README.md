@@ -31,4 +31,4 @@ By the end of this module you will be able to:
 - [ ] All your course files live inside one `Projects` folder, with names that have no spaces or accents.
 - [ ] You have a notes file in Markdown with at least one heading and one code block.
 
-**Next module:** [01 · Building blocks](../module-01-building-blocks/)
+**Next module:** [01 · Building blocks](../mod-01-building-blocks/)

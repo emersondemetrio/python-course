@@ -810,4 +810,4 @@ Average: 7.0
 - To build a list, start with `[]` before the loop and `append` inside.
 - `while` repeats while a condition is true; something inside must change it. `break` leaves a loop early. **Ctrl+C** stops a program that is stuck.
 
-**Next:** [Module 03: Functions](../module-03-functions/README.md)
+**Next:** [Module 03: Functions](../mod-03-functions/README.md)

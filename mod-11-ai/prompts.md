@@ -666,4 +666,4 @@ With this, your web page can show the suggestions with `fetch("/suggestions")`. 
 - Use rules for facts and calculations, and the model for creative or language tasks. Combining both is often best.
 - Design so the app still works when the AI part fails.
 
-**Next:** [The final project](../final-project/README.md)
+**Next:** [The final project](../mod-final-project/README.md)

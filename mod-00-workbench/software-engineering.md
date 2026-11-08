@@ -129,7 +129,7 @@ Taking notes after each study session, **in your own words**, is one of the best
 - **Git** is a tool that saves the history of your project, like a "save game" you can go back to at any moment.
 - **GitHub** is a website where you store that history online, to keep it safe and share it with others.
 
-You will learn both properly in [module 05](../module-05-git-and-github/). For now, it is enough to create an account at [github.com](https://github.com/).
+You will learn both properly in [module 05](../mod-05-git-and-github/). For now, it is enough to create an account at [github.com](https://github.com/).
 
 ## Common mistakes
 
@@ -347,4 +347,4 @@ You did not save. The white dot on the editor tab means unsaved changes. Press C
 - Take notes in **Markdown** (`.md`): `#` for titles, `-` for lists, backticks for code. Preview with Ctrl + Shift + V.
 - **Git** keeps the history of your project, **GitHub** keeps it online. Coming in module 05.
 
-**Next:** [Module 01 · Building blocks](../module-01-building-blocks/)
+**Next:** [Module 01 · Building blocks](../mod-01-building-blocks/)

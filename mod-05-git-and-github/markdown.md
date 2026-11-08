@@ -353,4 +353,4 @@ Total: 5 letters
 - Tables use `|` and a dashed line under the header.
 - `<details>` and `<summary>` hide content; leave empty lines inside them so Markdown still works.
 
-**Next:** [Module 06: Data structures](../module-06-data-structures/README.md)
+**Next:** [Module 06: Data structures](../mod-06-data-structures/README.md)

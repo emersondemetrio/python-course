@@ -37,4 +37,4 @@ If any of these feels shaky, revisit it first. Files use all of them.
 - [ ] Explain why lines get "glued together" when you forget `"\n"`
 - [ ] Finish the notes program from [project-notebook.md](project-notebook.md) and explain what `main()` does
 
-**Next module:** [Module 05: Git and GitHub](../module-05-git-and-github/README.md)
+**Next module:** [Module 05: Git and GitHub](../mod-05-git-and-github/README.md)

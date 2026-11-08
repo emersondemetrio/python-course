@@ -754,4 +754,4 @@ Notice how the last three lines tell the whole story of the program: which file,
 - `print` shows a value; `return` hands it back so you can store and reuse it.
 - List positions start at 0, and `for` visits one item per turn; `enumerate(..., start=1)` numbers them for people.
 
-**Next:** [Module 02: Decisions and loops](../module-02-decisions-and-loops/README.md)
+**Next:** [Module 02: Decisions and loops](../mod-02-decisions-and-loops/README.md)

@@ -25,19 +25,19 @@ Everything is explained from zero. Every new word is defined the first time it a
 
 | Module | Topics | Final project milestone |
 |---|---|---|
-| [00 · The workbench](module-00-workbench/) | Terminal, what Python is, organizing your work | |
-| [01 · Building blocks](module-01-building-blocks/) | Data types, variables, strings, built-in functions | |
-| [02 · Decisions and loops](module-02-decisions-and-loops/) | Conditionals, lists, `for` loops | |
-| [03 · Functions](module-03-functions/) | Defining and calling functions, scope, reading errors | |
-| [04 · Files](module-04-files/) | Reading and writing files | **Milestone 1:** save pieces to a text file |
-| [05 · Git and GitHub](module-05-git-and-github/) | Version control, GitHub, Markdown | **Milestone 2:** the project becomes a repository |
-| [06 · Data structures](module-06-data-structures/) | Dictionaries, tuples, sets, JSON, comprehensions | **Milestone 3:** each piece is a dictionary saved as JSON |
-| [07 · Organizing code](module-07-organizing-code/) | Modules, exceptions, testing, pip and virtual environments | **Milestone 4:** the project split into modules, with tests |
-| [08 · Objects](module-08-objects/) | Classes and inheritance | **Milestone 5:** a `Piece` class with its lifecycle |
-| [09 · Databases](module-09-databases/) | SQL basics, SQLite | **Milestone 6:** data moves from JSON to SQLite |
-| [10 · HTTP and the web](module-10-http-and-web/) | How the web works, calling APIs, building an API with Flask | **Milestone 7:** a web API and an HTML/CSS/JS interface |
-| [11 · AI](module-11-ai/) | What an LLM is, calling an LLM, writing prompts | **Milestone 8:** suggestions, first by rules, then with an LLM |
-| [Final project](final-project/) | Everything together | The finished ceramics studio manager |
+| [00 · The workbench](mod-00-workbench/) | Terminal, what Python is, organizing your work | |
+| [01 · Building blocks](mod-01-building-blocks/) | Data types, variables, strings, built-in functions | |
+| [02 · Decisions and loops](mod-02-decisions-and-loops/) | Conditionals, lists, `for` loops | |
+| [03 · Functions](mod-03-functions/) | Defining and calling functions, scope, reading errors | |
+| [04 · Files](mod-04-files/) | Reading and writing files | **Milestone 1:** save pieces to a text file |
+| [05 · Git and GitHub](mod-05-git-and-github/) | Version control, GitHub, Markdown | **Milestone 2:** the project becomes a repository |
+| [06 · Data structures](mod-06-data-structures/) | Dictionaries, tuples, sets, JSON, comprehensions | **Milestone 3:** each piece is a dictionary saved as JSON |
+| [07 · Organizing code](mod-07-organizing-code/) | Modules, exceptions, testing, pip and virtual environments | **Milestone 4:** the project split into modules, with tests |
+| [08 · Objects](mod-08-objects/) | Classes and inheritance | **Milestone 5:** a `Piece` class with its lifecycle |
+| [09 · Databases](mod-09-databases/) | SQL basics, SQLite | **Milestone 6:** data moves from JSON to SQLite |
+| [10 · HTTP and the web](mod-10-http-and-web/) | How the web works, calling APIs, building an API with Flask | **Milestone 7:** a web API and an HTML/CSS/JS interface |
+| [11 · AI](mod-11-ai/) | What an LLM is, calling an LLM, writing prompts | **Milestone 8:** suggestions, first by rules, then with an LLM |
+| [Final project](mod-final-project/) | Everything together | The finished ceramics studio manager |
 
 Each module folder has a `README.md` with its goals, the files to read in order, and a checklist that tells you when you are ready to move on.
 
@@ -95,7 +95,7 @@ It starts in module 04 as a tiny script that saves pieces to a text file. Every 
 - a **web interface** in HTML, CSS and JavaScript,
 - **suggestions** for what to do next, first with simple rules ("this piece has been drying for 8 days, it is ready for the bisque firing"), then with an **LLM** (a large language model, the kind of AI behind chat assistants).
 
-See the [final project](final-project/) folder for the full plan.
+See the [final project](mod-final-project/) folder for the full plan.
 
 ## For contributors
 

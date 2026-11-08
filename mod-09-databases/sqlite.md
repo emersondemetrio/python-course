@@ -737,4 +737,4 @@ The first `remove(2)` works (5 - 2 = 3). The second raises before changing anyth
 - After `INSERT`, `UPDATE` or `DELETE`, call `db.commit()`, and close the connection when you are done.
 - Keep SQL inside small functions (a repository), so the rest of your program never needs to know SQL.
 
-**Next:** [Module 10: HTTP and the web](../module-10-http-and-web/README.md)
+**Next:** [Module 10: HTTP and the web](../mod-10-http-and-web/README.md)

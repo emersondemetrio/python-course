@@ -694,4 +694,4 @@ Output:
 - Read values from the path with `<int:id>`, from the query string with `request.args`, and from a JSON body with `request.get_json()`.
 - A web page served by Flask can call your API with `fetch()`: the server sends data, the page's JavaScript shows it.
 
-**Next:** [Module 11: AI](../module-11-ai/README.md)
+**Next:** [Module 11: AI](../mod-11-ai/README.md)
